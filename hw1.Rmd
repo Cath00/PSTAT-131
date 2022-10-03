@@ -2,10 +2,69 @@
 title: "hw1"
 author: "Qiyang Du"
 date: "2022-09-30"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 test
 ```{r setup, include=FALSE}
+
+#Q1
+    #The difference between supervised and unsupervised learning is that the former one has supervisor, which is the actual data, so we can better predict, estimate, select the best model, and make inference from the supervisor;  But the unsupervised learning doesn't have the supervisor. (lecture slides pg.32)
+   
+#Q2
+    #The difference between regression and classification model is that regression is quantitative, but classification is qualitative.(lecture slides pg.33)
+
+#Q3
+    # Regression:  Numerical values:  price, blood pressure;  Classification: Categorical values:   survived/died, spam/not spam.
+
+#Q4
+    # Descriptive model:  Choose model to best visually  emphasize a trend in data
+    # Predictive model:  Aim is to predict the response variable with minimum reducible error
+    # Inferential model: To test theories, causal claims, and state relationship between outcome & predictors.  (lecture slides pg.38)
+
+#Q5 
+    # Mechanistic: Assume a parametric form for f; Won't match true unknown f;  Can add parameters; Usually overfitting.
+    # Empirically -driven: No assumption about f;  Require a larger number of observations;  More flexible by default; Overfitting
+    # These two models are both flexible, and usually overfit the real-world result;  But mechanistic model usually has assumption of a parametric form for f and won't match true unknown f; The empirically-driven model  doesn't assume about f, but require a large number of observations.
+    # I think mechanistic model is more conceptual and ideal, and it tells the underlaying patterns and driving force of a phenomena.  The mechanisms that governs the system is necessary and I think it's easier to understand.   The empirical models describe how things are by large number of observations.
+    # The bias-variance tradeoff is finding a good balance to minimize the bias and variance to avoid overfitting and underfitting.  So bias-variance tradeoff is a good way to testify the accuracy of the predictive models like mechanistic and empirically-driven model.
+
+
+#Q6
+    # The first question is predictive, since it's asking to predict the likelihood of a result.  The second question is inferential, because it's stating the relationship between the likelihood of the support (outcome) and personal contact with candidate (predictors). (lecture slides pg.38)
+
+
+library(tidyverse)
+library(ISLR)
+
+ #E1. 
+ggplot(data=mpg,aes(x=hwy))+geom_histogram(color = "black", binwidth =  1)
+# In the histogram of highway miles per gallon, we can see the frequency of different amount of oil consumption.  Most of the statistics centered between 13~38 miles per gallon.  There are 27 samples in total,the median is around 15 miles per gallon, and the mean is about 8.8 miles per gallon roughly.
+
+
+ #E2.
+plot(mpg$hwy, mpg$cty, main="scatter plot",
+     xlab = "hwy",ylab = "cty")
+# There is a strong positive correlation between hwy~ mpg and cty~mpg, since the clustered dots closely follow a line.
+
+ #E3.
+ggplot(data=mpg, aes(y=reorder(manufacturer,manufacturer,
+                               function(y)-length((y)))))+geom_bar(binwidth=1)
+# From the graph, we can see dodge produces the most cars, and the lincoln produces the least cars.
+
+#E4.
+boxplot(hwy~cyl,data=mpg,col=c("purple","red","green","blue"))
+# From the box plot of hwy grouped by cyl, we can see that the higher the value of cyl is, the lower the value of hwy is, and vice versa.  
+
+#E5
+library(corrplot)
+
+M<-select_if(mpg,is.numeric)
+corrplot(cor(M), method ='number',type='lower',order = 'alphabet', diag=FALSE)
+#From the plot, we can see that displ and cyl, hwy and cty, have positive correlation, since each group of variables move in the same direction;  However, cyl and cty, displ and cty, hwy and cyl, and hwy and displ, have negative correlation, since each group of variables move in the opposite direction.  
+#The relationships make sense to me, since it's not surprising that in real life, the miles per gallon and highway miles per gallon are positively correlated, since one increases, the other also increases.  
+
 
 knitr::opts_chunk$set(echo = TRUE)
 ```
